@@ -2,6 +2,7 @@
 'use strict';
 
 const program = require("commander")
+    , qrcode = require('qrcode-terminal')
     , secretParser = require("secret-parser")
     , otpCode = require("./lib/otpCode.js")
     , { version } = require('./package.json');
@@ -13,7 +14,7 @@ program
     .command('list')
     .description('List secrets name')
     .action((cmd) => {
-        let secrets = secrets(process.env.TOTP_SECRET);
+        let secrets = secretParser(process.env.TOTP_SECRET);
 
         Object.keys(secrets).forEach(function (name) {
             console.log(name);
@@ -24,17 +25,29 @@ program
     .command('secret-key [name]')
     .description('Get secret key')
     .action((name) => {
-        let secrets = secrets(process.env.TOTP_SECRET)
+        let secrets = secretParser(process.env.TOTP_SECRET)
           , secret = secrets[name];
 
         console.log(secret);
     });
 
 program
-    .command('code [name]')
-    .description('Get code')
+    .command('qr [name]')
+    .description('Get QRCode')
     .action((name) => {
-        console.log(otpCode(name));
+        let secrets = secretParser(process.env.TOTP_SECRET)
+          , secret = secrets[name];
+
+        qrcode.generate(otpCode(name).toString(), {small: true}, function (qrcode) {
+            console.log(qrcode);
+        });
+    });
+
+program
+    .command('token [name]')
+    .description('Get token')
+    .action((name) => {
+        console.log(otpCode(name).generate());
     });
 
 program.parse(process.argv);
