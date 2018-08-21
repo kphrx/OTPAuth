@@ -1,0 +1,20 @@
+{
+  "name": "totp-authenticator",
+  "description": "",
+  "keywords": [],
+  "author": "kPherox <admin@mail.kr-kp.com> (https://www.kr-kp.com/)",
+  "license": "MIT",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">= 8.0.0"
+  },
+  "main": "./index.js",
+  "private": true,
+  "dependencies": {
+    "base-64": "^0.1.0",
+    "commander": "^2.15.1",
+    "dotenv": "^5.0.1",
+    "otpauth": "^3.2.0",
+    "secret-parser": "file:local_modules/secret-parser"
+  }
+}
