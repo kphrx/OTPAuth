@@ -1,7 +1,7 @@
 require('dotenv').config();
 
-module.exports = function(issuer) {
-    let secrets = process.env.TOTP_SECRET.split(' ')
+module.exports = function(secretsString) {
+    let secrets = secretsString.split(' ')
       , secretsDict = secrets.reduce((previous, current) => {
           let secret = current.split(':');
           previous[secret[0]] = secret[1];
