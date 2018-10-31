@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 'use strict';
 
+process.chdir(__dirname)
+
 const program = require("commander")
     , qrcode = require('qrcode-terminal')
     , secretParser = require("secret-parser")
