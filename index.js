@@ -2,10 +2,11 @@
 'use strict';
 
 process.chdir(__dirname)
+require('dotenv').config();
 
 const program = require("commander")
+    , config = require('config')
     , qrcode = require('qrcode-terminal')
-    , secretParser = require("secret-parser")
     , otpCode = require("./lib/otpCode.js")
     , { version } = require('./package.json');
 
@@ -16,7 +17,7 @@ program
     .command('list')
     .description('List secrets name')
     .action((cmd) => {
-        let secrets = secretParser(process.env.TOTP_SECRET);
+        let secrets = config.get("TOTP-Secrets");
 
         Object.keys(secrets).forEach(function (name) {
             console.log(name);
@@ -27,8 +28,7 @@ program
     .command('secret-key [name]')
     .description('Get secret key')
     .action((name) => {
-        let secrets = secretParser(process.env.TOTP_SECRET)
-          , secret = secrets[name];
+        let secret = config.get("TOTP-Secrets." + issuer);
 
         console.log(secret);
     });
@@ -37,9 +37,6 @@ program
     .command('qr [name]')
     .description('Get QRCode')
     .action((name) => {
-        let secrets = secretParser(process.env.TOTP_SECRET)
-          , secret = secrets[name];
-
         qrcode.generate(otpCode(name).toString(), {small: true}, function (qrcode) {
             console.log(qrcode);
         });

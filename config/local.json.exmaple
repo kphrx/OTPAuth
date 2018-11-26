@@ -1,0 +1,14 @@
+{
+    "TOTP-Secrets": {
+        "<issuer name>": {
+            "secret": "<secret key>"
+        },
+        "<issuer name>": {
+            "label": "totp-authenticator",
+            "algorithm": "SHA1",
+            "digits": 6,
+            "period": 30,
+            "secret": "<secret key>"
+        }
+    }
+}
