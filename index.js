@@ -43,6 +43,13 @@ program
     });
 
 program
+    .command('url [name]')
+    .description('Get otp url')
+    .action((name) => {
+        console.log(otpCode(name).toString());
+    });
+
+program
     .command('token [name]')
     .description('Get token')
     .action((name) => {
