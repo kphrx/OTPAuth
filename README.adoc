@@ -2,3 +2,26 @@
 
 OTP Authentication tool.
 
+== Requirements
+
+* Go (latest checked: 1.14.3)
+
+== Installation
+
+Install to `$GOBIN`.
+
+[source, shell]
+----
+$ go get github.com/kPherox/otpauth
+----
+
+== Usage
+
+Work in progress...
+
+[source, shell]
+----
+$ ${GOBIN}/otpauth
+> 755224 # Test Values
+----
+

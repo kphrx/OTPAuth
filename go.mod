@@ -1,3 +1,3 @@
-module github.com/kPherox/OTPAuth
+module github.com/kPherox/otpauth
 
 go 1.14
