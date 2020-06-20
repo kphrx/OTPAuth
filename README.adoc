@@ -1,5 +1,8 @@
 = OTPAuth
 
+image:https://github.com/kPherox/OTPAuth/workflows/CI/badge.svg[alt="CI Badge",link=https://github.com/kPherox/OTPAuth/actions?query=workflow%3ACI]
+image:https://codecov.io/gh/kPherox/OTPAuth/branch/master/graph/badge.svg[alt="codecov",link=https://codecov.io/gh/kPherox/OTPAuth]
+
 OTP Authentication tool.
 
 == Requirements
@@ -22,6 +25,6 @@ Work in progress...
 [source, shell]
 ----
 $ ${GOBIN}/otpauth
-> 755224 # Test Values
+> 755224 # <1>
 ----
-
+<1> link:https://tools.ietf.org/html/rfc4226#page-32[RFC4226 - HOTP: An HMAC-Based One-Time Password Algorithm # _Appendix D - HOTP Algorithm: Test Values_]
