@@ -1,8 +1,0 @@
-{
-    "TOTP-Params": {
-        "label": "totp-authenticator",
-        "algorithm": "SHA1",
-        "digits": 6,
-        "period": 30
-    }
-}
