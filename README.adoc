@@ -1,13 +1,15 @@
-# TOTP-Authenticator
+= TOTP-Authenticator
+
 TOTP Authentication token manager.
 
-## How to use
-### Add `config/local.json` file.
+== How to use
+=== Add `config/local.json` file.
 copy from `config/local.json.exmaple`.
 
 sample
 
-```json
+[source, json]
+----
 {
     "TOTP-Secrets": {
         "provider-name" : {
@@ -16,26 +18,29 @@ sample
         }
     }
 }
-```
+----
 
-### Generate token
+=== Generate token
 
-```
+[source, shell]
+----
 $ /path/to/index.js token provider-name
 >>> 012345
-```
+----
 
-### Output otpauth:// URL & QR code
+=== Output otpauth:// URL & QR code
 url
 
-```
+[source, shell]
+----
 $ /path/to/index.js url provider-name
 >>> otpauth://totp/provider-name:account-email?issuer=provider-name&secret=<secret key>&algorithm=SHA1&digits=6&period=30
-```
+----
 
 qr
 
-```
+[source, shell]
+----
 $ /path/to/index.js qr provider-name
 >>> ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
     █ ▄▄▄▄▄ ██▀ ▀█▀ █▄ ▀█▀█ █████ ███▀█ ▄▄▄▄▄ █
@@ -59,5 +64,5 @@ $ /path/to/index.js qr provider-name
     █ █   █ ██▄ ▄▀▄█▄█ ▀▀ ▀▀ ▄▀█▀ ██▄▄ ▄ ▄ █  █
     █ █▄▄▄█ █▀▄▀█▀█▄▄ ▄█▀▀█▄█▀▄▄▄█▄ ▀█▀ █  ▀█▀█
     █▄▄▄▄▄▄▄█▄█▄█▄▄█▄▄▄████▄▄█▄▄▄█▄▄▄██████▄███
-```
+----
 
