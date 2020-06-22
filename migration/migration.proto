@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option go_package = "github.com/kPherox/otpauth/migration";
+
+message Migration {
+  enum Algorithm {
+    ALGO_UNSPECIFIED = 0;
+    ALGO_SHA1 = 1;
+    ALGO_SHA256 = 2; // WARNING: Google Authenticator not supported SHA256.
+    ALGO_SHA512 = 3; // WARNING: Google Authenticator not supported SHA512.
+  }
+
+  enum OtpType {
+    OTP_INVALID = 0;
+    OTP_HOTP = 1;
+    OTP_TOTP = 2;
+  }
+
+  message OtpParameter {
+    bytes secret = 1;
+    string name = 2;
+    string issuer = 3;
+    Algorithm algorithm = 4;
+    int32 digits = 5;
+    OtpType type = 6;
+    int64 counter = 7;
+    int64 period = 8; // REVIEW: "Google Authenticator" for Android: not supported `period`, for iOS: not supported otpauth migration.
+  }
+
+  repeated OtpParameter otp_parameters = 1;
+  int32 version = 2;
+  int32 batch_size = 3;
+  int32 batch_index = 4;
+  int32 batch_id = 5;
+}
