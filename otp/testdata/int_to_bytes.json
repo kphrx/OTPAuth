@@ -1,0 +1,36 @@
+{
+  "test_cases": [
+    {
+      "value": 127,
+      "result": "000000000000007f"
+    },
+    {
+      "value": 32767,
+      "result": "0000000000007fff"
+    },
+    {
+      "value": 8388607,
+      "result": "00000000007fffff"
+    },
+    {
+      "value": 2147483647,
+      "result": "000000007fffffff"
+    },
+    {
+      "value": 549755813887,
+      "result": "0000007fffffffff"
+    },
+    {
+      "value": 140737488355327,
+      "result": "00007fffffffffff"
+    },
+    {
+      "value": 36028797018963967,
+      "result": "007fffffffffffff"
+    },
+    {
+      "value": 9223372036854775807,
+      "result": "7fffffffffffffff"
+    }
+  ]
+}

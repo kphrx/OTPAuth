@@ -2,14 +2,7 @@ package otpauth
 
 import (
 	"crypto"
-	"fmt"
 )
-
-var digitsPower = map[int]int64{6: 1000000, 8: 100000000}
-
-func ZeroPadding(v int64, d int) string {
-	return fmt.Sprintf("%0*d", d, v%digitsPower[d])
-}
 
 func GenOTP(a crypto.Hash, s []byte, f int64) (int64, error) {
 	h, err := HMAC(a, s, Itob(f))

@@ -2,68 +2,83 @@ package otpauth
 
 import (
 	"fmt"
+	"strconv"
 	"testing"
 	"unsafe"
 )
 
+func TestZeroPadding(t *testing.T) {
+	run := func(t *testing.T, fixt Fixture, d int) {
+		for _, tc := range fixt.TestCases {
+			tc := tc
+			val, _ := strconv.ParseInt(tc.Value, 10, 64)
+			t.Run(fmt.Sprintf("%d to %s", val, tc.Result), func(t *testing.T) {
+				t.Parallel()
+				if got := ZeroPadding(val, d); got != tc.Result {
+					t.Errorf("ZeroPadding(%d, %d) = %s; want %s", val, d, got, tc.Result)
+				}
+			})
+		}
+	}
+	t.Run("Digits6", func(t *testing.T) {
+		t.Parallel()
+		run(t, zeroPaddingDigits6, 6)
+	})
+	t.Run("Digits8", func(t *testing.T) {
+		t.Parallel()
+		run(t, zeroPaddingDigits8, 8)
+	})
+}
+
 func TestItob(t *testing.T) {
-	for i, h := range map[int64]string{
-		0x7f:               "000000000000007f",
-		0x7fff:             "0000000000007fff",
-		0x7fffff:           "00000000007fffff",
-		0x7fffffff:         "000000007fffffff",
-		0x7fffffffff:       "0000007fffffffff",
-		0x7fffffffffff:     "00007fffffffffff",
-		0x7fffffffffffff:   "007fffffffffffff",
-		0x7fffffffffffffff: "7fffffffffffffff",
-	} {
-		i, h := i, h
-		t.Run(fmt.Sprintf("%d to %s", i, h), func(t *testing.T) {
+	for i, tc := range intToBytes.TestCases {
+		i, tc := i, tc
+		val, _ := strconv.ParseInt(tc.Value, 10, 64)
+		t.Run(fmt.Sprintf("%d to %s", val, tc.Result), func(t *testing.T) {
 			t.Parallel()
-			if b := Itob(i); fmt.Sprintf("%x", b) != h {
-				t.Errorf("Itob(%d) = %x; want %s", i, b, h)
+			if b := Itob(int64(val)); fmt.Sprintf("%x", b) != tc.Result || b[7-i] != byte(0x7f) {
+				t.Errorf("Itob(%d) = %x; want %s", val, b, tc.Result)
 			}
 		})
 	}
 }
 
 func TestBase32Secret(t *testing.T) {
-	for s, b := range map[string]struct {
-		Padding   string
-		NoPadding string
-	}{
-		"f":      {"MY======", "MY"},
-		"fo":     {"MZXQ====", "MZXQ"},
-		"foo":    {"MZXW6===", "MZXW6"},
-		"foob":   {"MZXW6YQ=", "MZXW6YQ"},
-		"fooba":  {"MZXW6YTB", "MZXW6YTB"},
-		"foobar": {"MZXW6YTBOI======", "MZXW6YTBOI"},
-	} {
-		s, b := s, b
-		t.Run(fmt.Sprintf("TestDecodeSecret/%s", s), func(t *testing.T) {
+	run := func(t *testing.T, fixt Fixture, f func(*testing.T, string, string)) {
+		for _, tc := range fixt.TestCases {
+			tc := tc
+			t.Run(fmt.Sprintf("%s to %s", tc.Value, tc.Result), func(t *testing.T) {
+				t.Parallel()
+				f(t, tc.Value, tc.Result)
+			})
+		}
+	}
+
+	t.Run("TestDecodeSecret", func(t *testing.T) {
+		t.Parallel()
+		decodeSecret := func(t *testing.T, v string, r string) {
+			if got, err := DecodeSecret(v); *(*string)(unsafe.Pointer(&got)) != r {
+				t.Errorf("DecodeSecret(\"%s\") = %s; want %s", v, got, r)
+			} else if err != nil {
+				t.Errorf("DecodeSecret(\"%s\") return error: %s", v, err)
+			}
+		}
+		t.Run("NoPadding", func(t *testing.T) {
 			t.Parallel()
-			t.Run(fmt.Sprintf("WithPadding/%s", b.Padding), func(t *testing.T) {
-				t.Parallel()
-				if got, err := DecodeSecret(b.Padding); *(*string)(unsafe.Pointer(&got)) != s {
-					t.Errorf("DecodeSecret(\"%s\") = %s; want %s", b.Padding, got, s)
-				} else if err != nil {
-					t.Errorf("DecodeSecret(\"%s\") return error: %s", b.Padding, err)
-				}
-			})
-			t.Run(fmt.Sprintf("NoPadding/%s", b.NoPadding), func(t *testing.T) {
-				t.Parallel()
-				if got, err := DecodeSecret(b.NoPadding); *(*string)(unsafe.Pointer(&got)) != s {
-					t.Errorf("DecodeSecret(\"%s\") = %s; want %s", b.NoPadding, got, s)
-				} else if err != nil {
-					t.Errorf("DecodeSecret(\"%s\") return error: %s", b.NoPadding, err)
-				}
-			})
+			run(t, decodeBase32, decodeSecret)
 		})
-		t.Run(fmt.Sprintf("TestEncodeSecret/%s", s), func(t *testing.T) {
+		t.Run("WithPadding", func(t *testing.T) {
 			t.Parallel()
-			if got := EncodeSecret([]byte(s)); got != b.NoPadding {
-				t.Errorf("EncodeSecret(\"%s\") = %s; want %s", s, got, b.NoPadding)
+			run(t, decodeBase32WithPadding, decodeSecret)
+		})
+	})
+
+	t.Run("TestEncodeSecret", func(t *testing.T) {
+		t.Parallel()
+		run(t, encodeBase32, func(t *testing.T, v string, r string) {
+			if got := EncodeSecret([]byte(v)); got != r {
+				t.Errorf("EncodeSecret(\"%s\") = %s; want %s", v, got, r)
 			}
 		})
-	}
+	})
 }

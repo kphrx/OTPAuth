@@ -2,8 +2,15 @@ package otpauth
 
 import (
 	"encoding/base32"
+	"fmt"
 	"strings"
 )
+
+var digitsPower = []int64{1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000}
+
+func ZeroPadding(v int64, d int) string {
+	return fmt.Sprintf("%0*d", d, v%digitsPower[d])
+}
 
 func Itob(n int64) []byte {
 	b := make([]byte, 8)

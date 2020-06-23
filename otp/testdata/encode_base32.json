@@ -1,0 +1,28 @@
+{
+  "test_cases": [
+    {
+      "value": "f",
+      "result": "MY"
+    },
+    {
+      "value": "fo",
+      "result": "MZXQ"
+    },
+    {
+      "value": "foo",
+      "result": "MZXW6"
+    },
+    {
+      "value": "foob",
+      "result": "MZXW6YQ"
+    },
+    {
+      "value": "fooba",
+      "result": "MZXW6YTB"
+    },
+    {
+      "value": "foobar",
+      "result": "MZXW6YTBOI"
+    }
+  ]
+}
