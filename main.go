@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/url"
 
-	"github.com/kPherox/otpauth/otp"
+	"github.com/kpherox/otpauth/otp"
 )
 
 func main() {

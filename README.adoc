@@ -15,7 +15,7 @@ Install to `$GOBIN`.
 
 [source, shell]
 ----
-$ go get github.com/kPherox/otpauth
+$ go install github.com/kpherox/otpauth@latest
 ----
 
 == Usage
