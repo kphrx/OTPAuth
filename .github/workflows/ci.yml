@@ -25,7 +25,7 @@ jobs:
       run: go mod download
 
     - name: Lint
-      run: go vet github.com/kpherox/otpauth/...
+      run: go vet github.com/kphrx/otpauth/...
 
   build:
     name: Build
@@ -44,7 +44,7 @@ jobs:
       run: go mod download
 
     - name: Build
-      run: go build -v github.com/kpherox/otpauth/...
+      run: go build -v github.com/kphrx/otpauth/...
 
   test:
     name: Test
@@ -64,7 +64,7 @@ jobs:
       run: go mod download
 
     - name: Test
-      run: go test -v -race -coverprofile=coverage.out -covermode=atomic github.com/kpherox/otpauth/...
+      run: go test -v -race -coverprofile=coverage.out -covermode=atomic github.com/kphrx/otpauth/...
 
     - name: Upload coverage
       uses: codecov/codecov-action@v1

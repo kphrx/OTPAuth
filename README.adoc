@@ -1,7 +1,7 @@
 = OTPAuth
 
-image:https://github.com/kPherox/OTPAuth/workflows/CI/badge.svg[alt="CI Badge",link=https://github.com/kPherox/OTPAuth/actions?query=workflow%3ACI]
-image:https://codecov.io/gh/kPherox/OTPAuth/branch/master/graph/badge.svg[alt="codecov",link=https://codecov.io/gh/kPherox/OTPAuth]
+image:https://github.com/kphrx/OTPAuth/workflows/CI/badge.svg[alt="CI Badge",link=https://github.com/kphrx/OTPAuth/actions?query=workflow%3ACI]
+image:https://codecov.io/gh/kphrx/OTPAuth/branch/master/graph/badge.svg[alt="codecov",link=https://codecov.io/gh/kphrx/OTPAuth]
 
 OTP Authentication tool.
 
@@ -15,7 +15,7 @@ Install to `$GOBIN`.
 
 [source, shell]
 ----
-$ go install github.com/kpherox/otpauth@latest
+$ go install github.com/kphrx/otpauth@latest
 ----
 
 == Usage
